@@ -16,7 +16,7 @@ ap.add_argument("-i", "--image", required=True,
 	help="path to image")
 args = vars(ap.parse_args())
 """
-predictorPath = "shape_predictor_68_face_landmarks.dat"
+predictorPath = "detection_data/shape_predictor_68_face_landmarks.dat"
 imagePath = "/Volumes/HDD/TFG/Foto el 16-11-17 a las 12.42.jpg"
 
 

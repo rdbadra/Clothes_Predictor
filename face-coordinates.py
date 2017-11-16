@@ -16,7 +16,7 @@ def rect_to_bb(rect):
 	# return a tuple of (x, y, w, h)
 	return (x, y, w, h)
 
-predictorPath = "shape_predictor_68_face_landmarks.dat"
+predictorPath = "detection_data/shape_predictor_68_face_landmarks.dat"
 imagePath = ""
 
 count = 0
