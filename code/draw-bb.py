@@ -18,7 +18,7 @@ ap.add_argument("-i", "--image", required=True,
 args = vars(ap.parse_args())
 """
 predictorPath = "../detection_data/shape_predictor_68_face_landmarks.dat"
-imagePath = "/Volumes/HDD/TFG/DeepFashion/Category and Attribute Prediction Benchmark/Img/img/2-in-1_Space_Dye_Athletic_Tank/img_00000004.jpg"
+imagePath = "/Volumes/HDD/TFG/DeepFashion/Category and Attribute Prediction Benchmark/Img/img/2-in-1_Space_Dye_Athletic_Tank/img_00000048.jpg"
 
 
 # initialize dlib's face detector (HOG-based) and then create
@@ -32,7 +32,7 @@ image = imutils.resize(image, width=500)
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 # loop over the face detections
-file = open("../face-coordinates/face-img_4.txt")
+file = open("../face-coordinates/face-img_48.txt")
 line = file.readline()
 split = line.split(";")
 num = int(split[0])
@@ -49,7 +49,7 @@ if(num > 0):
     h = int(split[3])
     val = (h * 3)/2
     cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-    cv2.rectangle(image, (x-w, y+h), (x + w*2, y + val*7), (255, 255, 255), 2)
+    cv2.rectangle(image, (x-w, y+h), (x + w*2, y + val*7), (0, 255, 255), 2)
     #crop = image[y+h:y + h*7, x-w:x + w*2]
 
     # show the face number

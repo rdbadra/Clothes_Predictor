@@ -41,6 +41,7 @@ for i in xrange(1,64):
         shape = predictor(gray, rect)
         shape = lib.shape_to_np(shape)
         if lib.check(lib.calc_euclidean_distance(shape[36], shape[39]), lib.calc_euclidean_distance(shape[42], shape[45])):
+            # Esto esta mal, quitar el aumentar nª de caras de aquí
             numberOfFaces += 1
             writefile.write(str(numberOfFaces)+";\n")
             (x, y, w, h) = lib.rect_to_bb(rect)
