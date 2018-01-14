@@ -33,7 +33,7 @@ def checkIfDictionaryIsCorrect():
         total += dict[str(number)]
     print(total)
 
-#checkIfDictionaryIsCorrect()
+checkIfDictionaryIsCorrect()
 
 def drawHistogram(listOfKeys, dictionary):
     x = listOfKeys
@@ -45,8 +45,10 @@ def drawHistogram(listOfKeys, dictionary):
     plt.show()
 
 dict = getDictionaryWithCategories()
-print(dict)
 listOfKeys = getListOfKeys(dict)
+#for n in listOfKeys:
+#    print("Number %d: " % n)
+#    print(dict[str(n)])
 drawHistogram(listOfKeys, dict)
 
 
