@@ -25,15 +25,19 @@ def getListOfKeys(dict):
     listOfKeys.sort()
     return listOfKeys
 
-def checkIfDictionaryIsCorrect():
-    dict = getDictionaryWithCategories()
+def checkIfDictionaryIsCorrect(dict):
     listOfKeys = getListOfKeys(dict)
     total = 0
     for number in listOfKeys:
         total += dict[str(number)]
     print(total)
 
-checkIfDictionaryIsCorrect()
+def getCategoriesWithBigData(dictionary, listOfKeys):
+    newDictionary = {}
+    for n in listOfKeys:
+        if (dictionary[str(n)] >= 5000):
+            newDictionary[str(n)] = dictionary[str(n)]
+    return newDictionary
 
 def drawHistogram(listOfKeys, dictionary):
     x = listOfKeys
@@ -46,10 +50,9 @@ def drawHistogram(listOfKeys, dictionary):
 
 dict = getDictionaryWithCategories()
 listOfKeys = getListOfKeys(dict)
-#for n in listOfKeys:
-#    print("Number %d: " % n)
-#    print(dict[str(n)])
-drawHistogram(listOfKeys, dict)
+#drawHistogram(listOfKeys, dict)
+newDict = getCategoriesWithBigData(dict, listOfKeys)
+checkIfDictionaryIsCorrect(newDict)
 
 
 

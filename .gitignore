@@ -1,1 +1,15 @@
+# Images for training
+
 DeepFashion/
+
+# Weights
+
+code/*.h5
+
+# Excel documents
+
+*.xlsx
+
+# Word documents
+
+*.docx
