@@ -22,6 +22,16 @@ def getDictionaryWithCategories(list_category_img_path = "/Volumes/HDD/TFG/DeepF
             line = fp.readline()
     return dict
 
+def getDictionaryWithCategoriesFromList(list):
+    dict = {}
+    for line in list:
+        split = line.split()
+        if split[1] in dict.keys():
+            dict[split[1]] += 1
+        else:
+            dict[split[1]] = 1
+    return dict
+
 """
 Gets array of keys of a dictionary
 """
@@ -37,12 +47,12 @@ def getListOfKeys(dict):
 Prints the total number of examples of the dictionary
 """
 
-def checkIfDictionaryIsCorrect(dict):
+def getTotalNumberOfValuesInDictionary(dict):
     listOfKeys = getListOfKeys(dict)
     total = 0
     for number in listOfKeys:
         total += dict[str(number)]
-    print(total)
+    return total
 
 """
 Gets a new dictionary with those keys wich values are more than 5000 examples

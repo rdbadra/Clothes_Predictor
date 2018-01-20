@@ -1,5 +1,6 @@
 import random
-from dictionary_of_categories import *
+import dictionary_of_categories as dc
+import math
 
 """
 Creates a file containing the elements of the list "subset"
@@ -15,16 +16,45 @@ Generates a new random list of 5000 examples
 """
 
 def generateSubset(list):
-    random.shuffle(list)
+    #random.shuffle(list)
     rand_smpl = [ list[i] for i in sorted(random.sample(range(len(list)), 5000)) ]
     return rand_smpl
+
+"""
+Creates a new dictionary with the proportional values to 5000 elements
+"""
+def generateProportionalDictionary(list, dictionary):
+    total = dc.getTotalNumberOfValuesInDictionary(dictionary)
+    keys = dc.getListOfKeys(dictionary)
+    proportions = {}
+    for key in keys:
+        proportions[str(key)] = math.ceil((dictionary[str(key)]/total)*5000)
+    return proportions
+        
+# Voy por aqui
+def generateProportionalSubset(list, dictionary):
+    proportions = generateProportionalDictionary(list, dictionary)
+    keys = dc.getListOfKeys(proportions)
+    listOfThisKey = []
+    finalList = []
+    for key in keys:
+        for line in list:
+            split = line.split()
+            if(int(split[1]) == key):
+                listOfThisKey.append(line)
+        reducedList = [ listOfThisKey[i] for i in sorted(random.sample(range(len(listOfThisKey)), proportions[str(key)])) ]
+        for element in reducedList:
+            finalList.append(element)
+        reducedList = []
+        listOfThisKey = []
+    finalList = [ finalList[i] for i in sorted(random.sample(range(len(finalList)), 5000)) ]
+    return finalList
 
 """
 Creates a list containing all elements of a file
 """
 
-def getDatasetFileInMemory():
-    list_category_img_path = "/Volumes/HDD/TFG/list_category_img.txt"
+def getDatasetFileInMemory(list_category_img_path = "/Volumes/HDD/TFG/list_category_img.txt"):
 
     list = []
     with open(list_category_img_path, "r") as fp:
@@ -47,24 +77,40 @@ def compareSubsets(s1, s2):
                 total += 1
     print(total)
 
-"""outputPath1 = "/Volumes/HDD/TFG/subset1.txt"
-outputPath2 = "/Volumes/HDD/TFG/subset2.txt"
+"""
+Creates a file with new subset from a dataset that contains only the categories of keys
+"""
 
-dataset = getDatasetFileInMemory()
+def generateSubsetFromKeys(dataset, keys):
+    path = "/Volumes/HDD/TFG/big_data_list_category_img.txt"
+    writefile = open(path, "w")
+    for line in dataset:
+        split = line.split()
+        if int(split[1]) in keys:
+            writefile.write(line)
 
-print("Length if dataset %d" % len(dataset))
 
-subset1 = generateSubset(dataset)
-print("Length of subset %d" % len(subset1))
-subset2 = generateSubset(dataset)
+"""
+Creates a file with the biggest amounts of data per category
+"""
+def createBigDataFile():
+    fullDataset = getDatasetFileInMemory()
+    fullDict = dc.getDictionaryWithCategories()
+    fullDictKeys = dc.getListOfKeys(fullDict)
+    maxDict = dc.getCategoriesWithBigData(fullDict, fullDictKeys)
+    maxDictKeys = dc.getListOfKeys(maxDict)
+    generateSubsetFromKeys(fullDataset, maxDictKeys)
 
+dataset = getDatasetFileInMemory(list_category_img_path = "/Volumes/HDD/TFG/big_data_list_category_img.txt")
+dictionary = dc.getDictionaryWithCategoriesFromList(dataset)
+#print(dictionary)
+#proportional = generateProportionalDictionary(dataset, dictionary)
+subset1 = generateProportionalSubset(dataset, dictionary)
+subset2 = generateProportionalSubset(dataset, dictionary)
 compareSubsets(subset1, subset2)
 
-writeSubset(outputPath1, subset1)
-writeSubset(outputPath2, subset2)"""
-
-
-
+writeSubset("/Volumes/HDD/TFG/subset1.txt", subset1)
+writeSubset("/Volumes/HDD/TFG/subset2.txt", subset2)
 
 
 

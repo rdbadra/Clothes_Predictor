@@ -4,7 +4,7 @@ DeepFashion/
 
 # Weights
 
-code/*.h5
+code/keras/*.h5
 
 # Excel documents
 
@@ -13,3 +13,7 @@ code/*.h5
 # Word documents
 
 *.docx
+
+# Big data file
+
+*.txt

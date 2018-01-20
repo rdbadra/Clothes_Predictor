@@ -4,7 +4,6 @@
 import numpy as np
 import argparse
 import math
-import collections
 
 outputPath = "/Volumes/HDD/TFG/list_category_img.txt"
 # File with list of images 
