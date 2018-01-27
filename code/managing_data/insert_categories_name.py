@@ -14,14 +14,18 @@ list_category_cloth_path = "/Volumes/HDD/TFG/DeepFashion/Category and Attribute 
 writefile = open(outputPath, "w")
 with open(list_category_img_path, "r") as fp:
     line = fp.readline()
-
+    writefile.write(line)
     count = 1
     while line:
+        if count is 2:
+            split = line.split()
+            writefile.write(split[0]+"\t"+split[1] + "\t" + "type_of_cloth" + "\t" + "body_part"+"\n")
         if count >= 3:
             split = line.split()
             with open(list_category_cloth_path, "r") as cloth:
                 clothLine = cloth.readline()
                 clothLine = cloth.readline()
+                #writefile.write(clothLine + "\t\t" + "type_of_cloth" + "\t\t" + "body_part")
                 clothLine = cloth.readline()
                 clothCount = 3
                 while clothLine:
@@ -42,4 +46,4 @@ with open(list_category_img_path, "r") as fp:
 
 
 
-print "Finished"
+print("Finished")

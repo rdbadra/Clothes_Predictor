@@ -77,3 +77,9 @@ def drawHistogram(listOfKeys, dictionary):
     plt.xlabel("Categories")
     plt.ylabel("Quantities")
     plt.show()
+
+"""dict = getDictionaryWithCategories2()
+
+keys = getListOfKeys(dict)
+print(keys)
+drawHistogram(keys, dict)"""

@@ -7,7 +7,11 @@ Creates a file containing the elements of the list "subset"
 """
 
 def writeSubset(outputPath, subset):
+    dictionary = dc.getDictionaryWithCategoriesFromList(subset)
+    total = dc.getTotalNumberOfValuesInDictionary(dictionary)
     writefile = open(outputPath, "w")
+    writefile.write(str(total)+"\n")
+    writefile.write("image_name"+"\t"+"category_label"+"\t"+"type_of_cloth"+"\t"+"body_part"+"\n")
     for line in subset:
         writefile.write(line)
 
@@ -31,7 +35,9 @@ def generateProportionalDictionary(list, dictionary):
         proportions[str(key)] = math.ceil((dictionary[str(key)]/total)*5000)
     return proportions
         
-# Voy por aqui
+"""
+Creates a list with the proportional values to 5000 elements
+"""
 def generateProportionalSubset(list, dictionary):
     proportions = generateProportionalDictionary(list, dictionary)
     keys = dc.getListOfKeys(proportions)
@@ -59,7 +65,8 @@ def getDatasetFileInMemory(list_category_img_path = "/Volumes/HDD/TFG/list_categ
     list = []
     with open(list_category_img_path, "r") as fp:
         line = fp.readline()
-        count = 1
+        line = fp.readline()
+        line = fp.readline()
         while line:
             list.append(line)
             line = fp.readline()
@@ -81,11 +88,15 @@ def compareSubsets(s1, s2):
 Creates a file with new subset from a dataset that contains only the categories of keys
 """
 
-def generateSubsetFromKeys(dataset, keys):
+def generateSubsetFromKeys(dataset, dictionary, keys):
     path = "/Volumes/HDD/TFG/big_data_list_category_img.txt"
     writefile = open(path, "w")
+    total = dc.getTotalNumberOfValuesInDictionary(dictionary)
+    writefile.write(str(total)+"\n")
+    writefile.write("image_name"+"\t"+"category_label"+"\t"+"type_of_cloth"+"\t"+"body_part"+"\n")
     for line in dataset:
         split = line.split()
+        print(split)
         if int(split[1]) in keys:
             writefile.write(line)
 
@@ -99,8 +110,9 @@ def createBigDataFile():
     fullDictKeys = dc.getListOfKeys(fullDict)
     maxDict = dc.getCategoriesWithBigData(fullDict, fullDictKeys)
     maxDictKeys = dc.getListOfKeys(maxDict)
-    generateSubsetFromKeys(fullDataset, maxDictKeys)
+    generateSubsetFromKeys(fullDataset, maxDict, maxDictKeys)
 
+#createBigDataFile()
 dataset = getDatasetFileInMemory(list_category_img_path = "/Volumes/HDD/TFG/big_data_list_category_img.txt")
 dictionary = dc.getDictionaryWithCategoriesFromList(dataset)
 #print(dictionary)
