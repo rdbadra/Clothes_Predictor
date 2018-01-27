@@ -78,8 +78,10 @@ def drawHistogram(listOfKeys, dictionary):
     plt.ylabel("Quantities")
     plt.show()
 
-"""dict = getDictionaryWithCategories2()
+"""dict = getDictionaryWithCategories(list_category_img_path="/Volumes/HDD/TFG/big_data_list_category_img.txt")
 
 keys = getListOfKeys(dict)
 print(keys)
 drawHistogram(keys, dict)"""
+
+#print(getDictionaryWithCategories(list_category_img_path="/Volumes/HDD/TFG/big_data_list_category_img.txt"))
