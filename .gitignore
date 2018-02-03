@@ -17,3 +17,7 @@ code/keras/*.h5
 # Big data file
 
 *.txt
+
+# Face coordinates files
+
+face-coordinates/
