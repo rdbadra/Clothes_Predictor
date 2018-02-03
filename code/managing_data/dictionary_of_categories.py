@@ -22,6 +22,9 @@ def getDictionaryWithCategories(list_category_img_path = "/Volumes/HDD/TFG/DeepF
             line = fp.readline()
     return dict
 
+"""
+Create a dictionary with the categories as keys, and value the number of examples
+"""
 def getDictionaryWithCategoriesFromList(list):
     dict = {}
     for line in list:
@@ -35,7 +38,6 @@ def getDictionaryWithCategoriesFromList(list):
 """
 Gets array of keys of a dictionary
 """
-
 def getListOfKeys(dict):
     listOfKeys = []
     for key in dict.keys():
@@ -46,7 +48,6 @@ def getListOfKeys(dict):
 """
 Prints the total number of examples of the dictionary
 """
-
 def getTotalNumberOfValuesInDictionary(dict):
     listOfKeys = getListOfKeys(dict)
     total = 0
@@ -57,7 +58,6 @@ def getTotalNumberOfValuesInDictionary(dict):
 """
 Gets a new dictionary with those keys wich values are more than 5000 examples
 """
-
 def getCategoriesWithBigData(dictionary, listOfKeys):
     newDictionary = {}
     for n in listOfKeys:
@@ -68,7 +68,6 @@ def getCategoriesWithBigData(dictionary, listOfKeys):
 """
 Draw graph of dictionary
 """
-
 def drawHistogram(listOfKeys, dictionary):
     x = listOfKeys
     y = [dictionary[str(i)] for i in listOfKeys]
