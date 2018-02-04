@@ -1,30 +1,18 @@
-"""
-
-count = 0
-for i in xrange(50):
-    print "doing loop "+str(i)
-    file = open("/Volumes/HDD/TFG/DeepFashion/Category and Attribute Prediction Benchmark/Anno/list_category_img.txt")
-    writefile = open("prueba-"+str(i)+".txt", "w")
-    line = file.readline()
-    while True:
-        split = line.split()
-        if count > 1:
-            if int(split[1]) is i:
-                writefile.write(line)
-        count = count + 1
-        line = file.readline()
-        if not line: break
-    file.close()
-    writefile.close()
-    count = 0
-
-print "Finished"""""
-import fnmatch
 import os
+import cv2
 
-matches = []
-for root, dirnames, filenames in os.walk('DeepFashion/Category and Attribute Prediction Benchmark/Img/img/'):
-    for filename in fnmatch.filter(filenames, '*.jpg'):
-        matches.append(os.path.join(root, filename))
+mypath = "/Volumes/HDD/TFG/face-coordinates/"
 
-#print matches
+f = [os.path.join(r,file) for r,d,f in os.walk(mypath) for file in f if file.endswith(".txt")]
+
+for textFile in f:
+    imageFile = "/Volumes/HDD/TFG/DeepFashion/Category and Attribute Prediction Benchmark/Img/" + textFile.replace(mypath, "")
+    imageFile = imageFile.replace('.txt', '.jpg')
+    with open(textFile) as coordinatesFile:
+        coordinatesText = coordinatesFile.readline()
+        splitCoordinates = coordinatesText.split(';')
+        image = cv2.imread(imageFile)
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        cv2.rectangle(image, (int(splitCoordinates[0]), int(splitCoordinates[1])), (int(splitCoordinates[2]), int(splitCoordinates[3])), (0, 255, 0), 2)
+        cv2.imshow("Output", image)
+        cv2.waitKey(0)
