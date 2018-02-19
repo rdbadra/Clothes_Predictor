@@ -14,7 +14,11 @@ def getDictionaryWithCategories(list_category_img_path = "/Volumes/HDD/TFG/DeepF
         line = fp.readline()
         count = 1
         while line:
-            split = line.split()
+            if (list_category_img_path == "/Volumes/HDD/TFG/DeepFashion/Category and Attribute Prediction Benchmark/Anno/list_category_img.txt"):
+                split = line.split()
+            else:
+                split = line.split('  ')
+            #print(split)
             if split[1] in dict.keys():
                 dict[split[1]] += 1
             else:

@@ -43,7 +43,7 @@ def generateProportionalSubset(list, dictionary):
     finalList = []
     for key in keys:
         for line in list:
-            split = line.split()
+            split = line.split('  ')
             if(int(split[1]) == key):
                 listOfThisKey.append(line)
         reducedList = [ listOfThisKey[i] for i in sorted(random.sample(range(len(listOfThisKey)), proportions[str(key)])) ]
@@ -78,7 +78,7 @@ def compareSubsets(s1, s2):
         for el2 in s2:
             if el2 == el1:
                 total += 1
-    print(total)
+    print("Number of repeated Elements: "+str(total))
 
 """
 Creates a file with new subset from a dataset that contains only the categories of keys
@@ -89,15 +89,15 @@ def generateSubsetFromKeys(dataset, dictionary, keys):
     writefile = open(path, "w")
     total = dc.getTotalNumberOfValuesInDictionary(dictionary)
     writefile.write(str(total)+"\n")
-    writefile.write("image_name"+"\t"+"category_label"+"\t"+"type_of_cloth"+"\t"+"body_part"+"\n")
+    writefile.write("image_name"+"  "+"category_label"+"  "+"type_of_cloth"+"  "+"body_part"+"\n")
     for line in dataset:
         split = line.split()
-        print(split)
+        #print(split)
         if int(split[1]) in keys:
             if int(split[1]) is 17:
-                writefile.write(split[0]+"\t"+str(19)+"\t"+split[2]+"\t"+split[3]+"\n")
+                writefile.write(split[0]+"  "+str(19)+"  "+split[2]+"  "+split[3]+"\n")
             else:
-                writefile.write(line)
+                writefile.write(split[0]+"  "+split[1]+"  "+split[2]+"  "+split[3]+"\n")
 
 
 """
@@ -111,14 +111,12 @@ def createBigDataFile():
     maxDictKeys = dc.getListOfKeys(maxDict)
     generateSubsetFromKeys(fullDataset, maxDict, maxDictKeys)
 
-"""createBigDataFile()
+createBigDataFile()
 dic=dc.getDictionaryWithCategories("/Volumes/HDD/TFG/big_data_list_category_img.txt")
 print(dic)
-print(dc.getTotalNumberOfValuesInDictionary(dic))"""
-"""dataset = getDatasetFileInMemory(list_category_img_path = "/Volumes/HDD/TFG/big_data_list_category_img.txt")
+print("Total Values in Dictionary Big Data : "+str(dc.getTotalNumberOfValuesInDictionary(dic)))
+dataset = getDatasetFileInMemory(list_category_img_path = "/Volumes/HDD/TFG/big_data_list_category_img.txt")
 dictionary = dc.getDictionaryWithCategoriesFromList(dataset)
-#print(dictionary)
-#proportional = generateProportionalDictionary(dataset, dictionary)
 subset1 = generateProportionalSubset(dataset, dictionary)
 subset2 = generateProportionalSubset(dataset, dictionary)
 subset3 = generateProportionalSubset(dataset, dictionary)
@@ -139,4 +137,4 @@ dic=dc.getDictionaryWithCategories("/Volumes/HDD/TFG/subset3.txt")
 print("Subset 3: ")
 print(dic)
 print(dc.getTotalNumberOfValuesInDictionary(dic))
-print("Finished")"""
+print("Finished")
