@@ -1,6 +1,9 @@
 import numpy as np
+import pandas as pd
+import time
 
 big_data = "/Volumes/HDD/TFG/big_data_list_category_img.txt"
+full_data = "/Volumes/HDD/TFG/height_width.txt"
 bbox_data = "/Volumes/HDD/TFG/DeepFashion/Category and Attribute Prediction Benchmark/Anno/list_bbox.txt"
 file_with_sizes = "/Volumes/HDD/TFG/height_width.txt"
 
@@ -52,22 +55,58 @@ def createSizeFile2():
     bbox = loadFile(bbox_data)
     fileToCreate = open(file_with_sizes, "w")
     fileToCreate.write(str(len(big))+"\n")
-    fileToCreate.write("image_name;height,width;height/width_relation\n")
+    fileToCreate.write("image_name  category_label  type_of_cloth  body_part  height  width  height/width_relation\n")
     i = 0
     for big_line in big:
-        big_split = big_line.split()
+        big_split = big_line.split(',')
         if (i % 10000) == 0:
             print(i)
         i += 1
+        bef = time.time()
         for bbox_line in bbox:
             bbox_split = bbox_line.split()
             if(big_split[0] == bbox_split[0]):
                 width = int(bbox_split[3]) - int(bbox_split[1])
                 height = int(bbox_split[4]) - int(bbox_split[2])
                 relation = height/width
-                fileToCreate.write(bbox_split[0] + ";" + str(width) + ";" + 
-                str(height) + ";" + str(relation) + ";\n")
+                fileToCreate.write(big_split[0]+"  "+big_split[1]+"  "+big_split[2]+"  "+
+                big_split[3]+"  "+bbox_split[0] + "  " + str(width) + "  " + 
+                str(height) + "  " + str(relation) + "\n")
                 break
+        now = time.time()
+        print(str(1000*(now-bef))+"ms")
+    print("finished")
+
+def createSizeFile3():
+    big = loadFile(big_data)
+    bbox = loadFile(bbox_data)
+    df = pd.read_csv(bbox_data, delim_whitespace=True,skiprows=0,header=1)
+    fileToCreate = open(file_with_sizes, "w")
+    fileToCreate.write(str(len(big))+"\n")
+    fileToCreate.write("image_name  category_label  type_of_cloth  body_part  height  width  height/width_relation\n")
+    i = 0
+    times = []
+    
+    for big_line in big:
+        bef = time.time()
+        big_split = big_line.split('  ')
+        if (i % 1000) == 0:
+            print(i)
+        i += 1
+        now = time.time()
+        width = int(df.loc[df['image_name'] == big_split[0]].iloc[0][3]) - int(df.loc[df['image_name'] == big_split[0]].iloc[0][1])
+        height = int(df.loc[df['image_name'] == big_split[0]].iloc[0][4]) - int(df.loc[df['image_name'] == big_split[0]].iloc[0][2])
+        relation = height/width
+        nextsplit = big_split[3].split("\n")
+        #print(nextsplit)
+        line = big_split[0]+"  "+big_split[1]+"  "+big_split[2]+"  "+nextsplit[0]+"  "+ str(height)+ "  " + str(width) + "  " + str(relation) + "\n"
+        #print(line)
+        fileToCreate.write(line)
+        after = time.time()
+        res = 1000*(after-now)
+        times.append(res)
+    np_times = np.array(times)
+    print("Mean time taken per line: "+str(np.mean(np_times)))
     print("finished")
 
 def getStandardDeviationAndVariance():
@@ -88,9 +127,11 @@ def getStandardDeviationAndVariance():
     print("Var of widths: "+str(np.var(np_widths)))
     print("Std of heights: "+str(np.std(np_heights)))
     print("Var of heights: "+str(np.var(np_heights)))
-#createSizeFile2()
+#createSizeFile3()
 #getStandardDeviationAndVariance()
-import pandas as pd
+#df = pd.read_csv(bbox_data, delim_whitespace=True,skiprows=0,header=1)
+#category_label = df.loc[df['image_name'] == "img/Sheer_Pleated-Front_Blouse/img_00000001.jpg"].iloc[0][1]
+#print(type(int(category_label)))
 
-df = pd.read_csv(big_data, sep='  ', header=1)
-print(df.loc[df['type_of_cloth'] == 'Blouse'])
+df = pd.read_csv(full_data, delim_whitespace=True,skiprows=0,header=1)
+print(df.describe())
