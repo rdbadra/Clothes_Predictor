@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import time
+import matplotlib.pyplot as plt
 
 big_data = "/Volumes/HDD/TFG/big_data_list_category_img.txt"
 full_data = "/Volumes/HDD/TFG/height_width.txt"
@@ -19,65 +20,6 @@ def loadFile(path):
     return list
 
 def createSizeFile():
-    fileToCreate = open(file_with_sizes, "w")
-    with open(big_data, "r") as big_data_file:
-        big_line = big_data_file.readline()
-        fileToCreate.write(big_line)
-        fileToCreate.write("image_name;height,width;height/width_relation\n")
-        big_line = big_data_file.readline()
-        big_line = big_data_file.readline()
-        index = 1
-        while big_line:
-            big_split = big_line.split()
-            with open(bbox_data, "r") as bbox_data_file:
-                bbox_line = bbox_data_file.readline()
-                bbox_line = bbox_data_file.readline()
-                bbox_line = bbox_data_file.readline()
-                while bbox_line:
-                    bbox_split = bbox_line.split()
-                    if (bbox_split[0] == big_split[0]):
-                        width = int(bbox_split[3]) - int(bbox_split[1])
-                        height = int(bbox_split[4]) - int(bbox_split[2])
-                        relation = height/width
-                        fileToCreate.write(bbox_split[0] + ";" + str(width) + ";" + 
-                        str(height) + ";" + str(relation) + ";\n")
-                        break
-                    bbox_line = bbox_data_file.readline()
-                bbox_line = bbox_data_file.readline()
-            if (index % 100) == 0:
-                print(index)
-            index += 1
-            big_line = big_data_file.readline()
-    print("finished")
-
-def createSizeFile2():
-    big = loadFile(big_data)
-    bbox = loadFile(bbox_data)
-    fileToCreate = open(file_with_sizes, "w")
-    fileToCreate.write(str(len(big))+"\n")
-    fileToCreate.write("image_name  category_label  type_of_cloth  body_part  height  width  height/width_relation\n")
-    i = 0
-    for big_line in big:
-        big_split = big_line.split(',')
-        if (i % 10000) == 0:
-            print(i)
-        i += 1
-        bef = time.time()
-        for bbox_line in bbox:
-            bbox_split = bbox_line.split()
-            if(big_split[0] == bbox_split[0]):
-                width = int(bbox_split[3]) - int(bbox_split[1])
-                height = int(bbox_split[4]) - int(bbox_split[2])
-                relation = height/width
-                fileToCreate.write(big_split[0]+"  "+big_split[1]+"  "+big_split[2]+"  "+
-                big_split[3]+"  "+bbox_split[0] + "  " + str(width) + "  " + 
-                str(height) + "  " + str(relation) + "\n")
-                break
-        now = time.time()
-        print(str(1000*(now-bef))+"ms")
-    print("finished")
-
-def createSizeFile3():
     big = loadFile(big_data)
     bbox = loadFile(bbox_data)
     df = pd.read_csv(bbox_data, delim_whitespace=True,skiprows=0,header=1)
@@ -117,9 +59,9 @@ def getStandardDeviationAndVariance():
         line = file.readline()
         line = file.readline()
         while line:
-            split = line.split(";")
-            widths.append(int(split[1]))
-            heights.append(int(split[2]))
+            split = line.split("  ")
+            widths.append(int(split[4]))
+            heights.append(int(split[5]))
             line = file.readline()
     np_widths = np.array(widths)
     np_heights = np.array(heights)
@@ -127,11 +69,27 @@ def getStandardDeviationAndVariance():
     print("Var of widths: "+str(np.var(np_widths)))
     print("Std of heights: "+str(np.std(np_heights)))
     print("Var of heights: "+str(np.var(np_heights)))
-#createSizeFile3()
+
+def drawHeightsHistogram():
+    dict = {}
+    file = loadFile(file_with_sizes)
+    for line in file:
+        split = line.split()
+        if split[1] in dict.keys():
+            dict[split[1]].append(int(split[4]))
+        else:
+            dict[split[1]] = []
+    for key in dict.keys():
+        plt.title(key)
+        plt.hist(dict[key])
+        plt.show()
+        plt.clf()
+#createSizeFile()
 #getStandardDeviationAndVariance()
 #df = pd.read_csv(bbox_data, delim_whitespace=True,skiprows=0,header=1)
 #category_label = df.loc[df['image_name'] == "img/Sheer_Pleated-Front_Blouse/img_00000001.jpg"].iloc[0][1]
 #print(type(int(category_label)))
 
-df = pd.read_csv(full_data, delim_whitespace=True,skiprows=0,header=1)
-print(df.describe())
+#df = pd.read_csv(full_data, delim_whitespace=True,skiprows=0,header=1)
+#print(df.describe())
+drawHeightsHistogram()
