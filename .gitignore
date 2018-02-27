@@ -21,3 +21,7 @@ code/keras/*.h5
 # Face coordinates files
 
 face-coordinates/
+
+# cropped Images
+
+crops/
