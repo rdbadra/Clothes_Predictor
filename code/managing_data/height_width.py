@@ -4,7 +4,7 @@ import time
 import matplotlib.pyplot as plt
 
 big_data = "/Volumes/HDD/TFG/big_data_list_category_img.txt"
-full_data = "/Volumes/HDD/TFG/height_width.txt"
+full_data = "/Volumes/HDD/TFG/full_data.txt"
 bbox_data = "/Volumes/HDD/TFG/DeepFashion/Category and Attribute Prediction Benchmark/Anno/list_bbox.txt"
 file_with_sizes = "/Volumes/HDD/TFG/height_width.txt"
 
@@ -78,7 +78,7 @@ def drawHeightsHistogram():
         if split[1] in dict.keys():
             dict[split[1]].append(int(split[4]))
         else:
-            dict[split[1]] = []
+            dict[split[1]] = [int(split[4])]
     for key in dict.keys():
         plt.title(key)
         plt.hist(dict[key])
@@ -86,10 +86,15 @@ def drawHeightsHistogram():
         plt.clf()
 #createSizeFile()
 #getStandardDeviationAndVariance()
-#df = pd.read_csv(bbox_data, delim_whitespace=True,skiprows=0,header=1)
+#df = pd.read_csv("test.txt", delim_whitespace=True,skiprows=0)
+#print(df.describe())
 #category_label = df.loc[df['image_name'] == "img/Sheer_Pleated-Front_Blouse/img_00000001.jpg"].iloc[0][1]
 #print(type(int(category_label)))
+df = pd.read_csv(full_data, delim_whitespace=True,skiprows=0,header=1)
+print(df.head())
+#heightDF = df[df['height'] > 50]
+#w = heightDF[heightDF["width"] > 50]
+#print(w.describe())
+#w.to_csv("full_data.txt", sep=" ", index=False)
 
-#df = pd.read_csv(full_data, delim_whitespace=True,skiprows=0,header=1)
-#print(df.describe())
-drawHeightsHistogram()
+#drawHeightsHistogram()
