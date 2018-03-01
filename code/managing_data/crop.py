@@ -2,13 +2,13 @@ import os
 import errno
 import cv2
 
-mypath = "/Volumes/HDD/TFG/face-coordinates/"
-cropPath = "/Volumes/HDD/TFG/crops/"
+mypath = os.getcwd()+"/../../face-coordinates/"
+cropPath = os.getcwd()+"/../../crops/"
 
 f = [os.path.join(r,file) for r,d,f in os.walk(mypath) for file in f if file.endswith(".txt")]
 
 for textFile in f:
-    imageFile = "/Volumes/HDD/TFG/DeepFashion/Category and Attribute Prediction Benchmark/Img/" + textFile.replace(mypath, "")
+    imageFile = os.getcwd()+"/../../DeepFashion/Category and Attribute Prediction Benchmark/Img/" + textFile.replace(mypath, "")
     imageFile = imageFile.replace('.txt', '.jpg')
     with open(textFile) as coordinatesFile:
         coordinatesText = coordinatesFile.readline()

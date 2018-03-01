@@ -2,11 +2,12 @@ import numpy as np
 import pandas as pd
 import time
 import matplotlib.pyplot as plt
+import os
 
-big_data = "/Volumes/HDD/TFG/big_data_list_category_img.txt"
-full_data = "/Volumes/HDD/TFG/full_data.txt"
-bbox_data = "/Volumes/HDD/TFG/DeepFashion/Category and Attribute Prediction Benchmark/Anno/list_bbox.txt"
-file_with_sizes = "/Volumes/HDD/TFG/height_width.txt"
+big_data = os.getcwd()+"/../../big_data_list_category_img.txt"
+full_data = os.getcwd()+"/../../full_data.txt"
+bbox_data = os.getcwd()+"/../../DeepFashion/Category and Attribute Prediction Benchmark/Anno/list_bbox.txt"
+file_with_sizes = os.getcwd()+"/../../height_width.txt"
 
 def loadFile(path):
     list = []
@@ -84,7 +85,7 @@ def drawHeightsHistogram():
         plt.hist(dict[key])
         plt.show()
         plt.clf()
-#createSizeFile()
+createSizeFile()
 #getStandardDeviationAndVariance()
 #df = pd.read_csv("test.txt", delim_whitespace=True,skiprows=0)
 #print(df.describe())
@@ -92,9 +93,9 @@ def drawHeightsHistogram():
 #print(type(int(category_label)))
 df = pd.read_csv(full_data, delim_whitespace=True,skiprows=0,header=1)
 print(df.head())
-#heightDF = df[df['height'] > 50]
-#w = heightDF[heightDF["width"] > 50]
+heightDF = df[df['height'] > 50]
+w = heightDF[heightDF["width"] > 50]
 #print(w.describe())
-#w.to_csv("full_data.txt", sep=" ", index=False)
+w.to_csv("full_data.txt", sep=" ", index=False)
 
 #drawHeightsHistogram()

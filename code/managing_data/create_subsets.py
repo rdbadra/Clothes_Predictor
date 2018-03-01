@@ -1,6 +1,7 @@
 import random
 import dictionary_of_categories as dc
 import math
+import os
 
 """
 Creates a file containing the elements of the list "subset"
@@ -57,7 +58,7 @@ def generateProportionalSubset(list, dictionary):
 """
 Creates a list containing all elements of a file
 """
-def getDatasetFileInMemory(list_category_img_path = "/Volumes/HDD/TFG/list_category_img.txt"):
+def getDatasetFileInMemory(list_category_img_path = os.getcwd()+"/../../list_category_img.txt"):
 
     list = []
     with open(list_category_img_path, "r") as fp:
@@ -85,7 +86,7 @@ Creates a file with new subset from a dataset that contains only the categories 
 Here we also join categories 17 and 19 into 19
 """
 def generateSubsetFromKeys(dataset, dictionary, keys):
-    path = "/Volumes/HDD/TFG/big_data_list_category_img.txt"
+    path =os.getcwd()+"/../../big_data_list_category_img.txt"
     writefile = open(path, "w")
     total = dc.getTotalNumberOfValuesInDictionary(dictionary)
     writefile.write(str(total)+"\n")
@@ -112,28 +113,28 @@ def createBigDataFile():
     generateSubsetFromKeys(fullDataset, maxDict, maxDictKeys)
 
 createBigDataFile()
-dic=dc.getDictionaryWithCategories("/Volumes/HDD/TFG/full_data.txt")
+dic=dc.getDictionaryWithCategories(os.getcwd()+"/../../full_data.txt")
 print(dic)
 print("Total Values in Dictionary Big Data : "+str(dc.getTotalNumberOfValuesInDictionary(dic)))
-dataset = getDatasetFileInMemory(list_category_img_path = "/Volumes/HDD/TFG/full_data.txt")
+dataset = getDatasetFileInMemory(list_category_img_path = os.getcwd()+"/../../full_data.txt")
 dictionary = dc.getDictionaryWithCategoriesFromList(dataset)
 subset1 = generateProportionalSubset(dataset, dictionary)
 subset2 = generateProportionalSubset(dataset, dictionary)
 subset3 = generateProportionalSubset(dataset, dictionary)
 compareSubsets(subset1, subset2)
 
-writeSubset("/Volumes/HDD/TFG/subset1.txt", subset1)
-writeSubset("/Volumes/HDD/TFG/subset2.txt", subset2)
-writeSubset("/Volumes/HDD/TFG/subset3.txt", subset3)
-dic=dc.getDictionaryWithCategories("/Volumes/HDD/TFG/subset1.txt")
+writeSubset(os.getcwd()+"/../../subset1.txt", subset1)
+writeSubset(os.getcwd()+"/../../subset2.txt", subset2)
+writeSubset(os.getcwd()+"/../../subset3.txt", subset3)
+dic=dc.getDictionaryWithCategories(os.getcwd()+"/../../subset1.txt")
 print("Subset 1: ")
 print(dic)
 print(dc.getTotalNumberOfValuesInDictionary(dic))
-dic=dc.getDictionaryWithCategories("/Volumes/HDD/TFG/subset2.txt")
+dic=dc.getDictionaryWithCategories(os.getcwd()+"/../../subset2.txt")
 print("Subset 2: ")
 print(dic)
 print(dc.getTotalNumberOfValuesInDictionary(dic))
-dic=dc.getDictionaryWithCategories("/Volumes/HDD/TFG/subset3.txt")
+dic=dc.getDictionaryWithCategories(os.getcwd()+"/../../subset3.txt")
 print("Subset 3: ")
 print(dic)
 print(dc.getTotalNumberOfValuesInDictionary(dic))

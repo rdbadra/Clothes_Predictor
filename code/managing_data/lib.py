@@ -1,5 +1,7 @@
 import numpy as np
 import math
+import os
+import os.path
 
 def check(left, right):
     max = 0
@@ -44,3 +46,5 @@ def rect_to_bb(rect):
  
 	# return a tuple of (x, y, w, h)
 	return (x, y, w, h)
+
+print(os.getcwd())

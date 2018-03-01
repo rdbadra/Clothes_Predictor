@@ -1,12 +1,15 @@
 # This file will return a dictionary with the number of times each category is repeated
 import numpy as np
 import matplotlib.pyplot as plt
+import os
+
+currentPath = os.getcwd()
 
 """
 Create a dictionary with the categories as keys, and value the number of examples
 """
 
-def getDictionaryWithCategories(list_category_img_path = "/Volumes/HDD/TFG/DeepFashion/Category and Attribute Prediction Benchmark/Anno/list_category_img.txt"):
+def getDictionaryWithCategories(list_category_img_path = currentPath+"/../../DeepFashion/Category and Attribute Prediction Benchmark/Anno/list_category_img.txt"):
     dict = {}
     with open(list_category_img_path, "r") as fp:
         line = fp.readline()
@@ -14,7 +17,7 @@ def getDictionaryWithCategories(list_category_img_path = "/Volumes/HDD/TFG/DeepF
         line = fp.readline()
         count = 1
         while line:
-            if (list_category_img_path == "/Volumes/HDD/TFG/DeepFashion/Category and Attribute Prediction Benchmark/Anno/list_category_img.txt"):
+            if (list_category_img_path == currentPath+"/../../DeepFashion/Category and Attribute Prediction Benchmark/Anno/list_category_img.txt"):
                 split = line.split()
             else:
                 split = line.split(' ')
