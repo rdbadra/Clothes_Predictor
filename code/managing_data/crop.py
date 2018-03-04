@@ -20,7 +20,7 @@ for textFile in f:
         x2 = int(splitCoordinates[2])
         y2 = int(splitCoordinates[3])
         crop = image[y1:y2, x1:x2]
-        resized_crop = cv2.resize(crop, (200, 200))
+        resized_crop = cv2.resize(crop, (150, 200))
         path = cropPath + textFile.replace(mypath, "")
         path = path.replace('.txt', '.jpg')
         if not os.path.exists(os.path.dirname(path)):

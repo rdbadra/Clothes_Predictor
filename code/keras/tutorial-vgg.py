@@ -3,14 +3,15 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
 from keras.layers import Dropout, Flatten, Dense
 from keras import applications
+import os
 
 # dimensions of our images.
-img_width, img_height = 150, 150
+img_width, img_height = 150, 200
 
 top_model_weights_path = 'bottleneck_fc_model.h5'
-train_data_dir = 'data/train'
-validation_data_dir = 'data/validation'
-nb_train_samples = 2000
+train_data_dir = os.getcwd()+"/../../crops"
+#validation_data_dir = 'data/validation'
+nb_train_samples = 5000
 nb_validation_samples = 800
 epochs = 50
 batch_size = 16
