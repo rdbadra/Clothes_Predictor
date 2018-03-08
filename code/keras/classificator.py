@@ -22,8 +22,8 @@ def getListForOneHotEncoding():
 def convert_image(path):
     img = image.load_img(os.getcwd()+"/../../crops/"+path, target_size=(150, 200))
     x = image.img_to_array(img)
-    x = np.expand_dims(x, axis=0)
-    x = preprocess_input(x)
+    #x = np.expand_dims(x, axis=0)
+    #x = preprocess_input(x)
     return x
 
 def process_line(line, listForOneHot):
@@ -33,7 +33,7 @@ def process_line(line, listForOneHot):
     y_np = np.zeros(14)
     i = listForOneHot.index(Y)
     y_np[i] = 1
-    print(y_np)
+    #print(y_np)
     return image, y_np
 
 
@@ -41,15 +41,24 @@ def process_line(line, listForOneHot):
 def generate_arrays_from_file(path):
     listForOneHot = getListForOneHotEncoding()
     while 1:
-        with open(path) as f:
+        with open(path, "r") as f:
             line = f.readline()
             line = f.readline()
             line = f.readline()
+            i = 1
+            inputs = []
+            targets = []
             while line:
                 # create Numpy arrays of input data
                 # and labels, from each line in the file
                 x, y = process_line(line, listForOneHot)
-                yield (x, y)
+                inputs.append(x)
+                targets.append(y)
+                if i%14==0:
+                    X = np.array(inputs)
+                    Y = np.array(targets)
+                    yield (X, Y)
+                i += 1
                 line = f.readline()
 
 def loadModel():
