@@ -25,3 +25,7 @@ face-coordinates/
 # cropped Images
 
 crops/
+
+# Zips
+
+*.zip
