@@ -22,8 +22,7 @@ def getListForOneHotEncoding():
 def convert_image(path):
     img = image.load_img(os.getcwd()+"/../../crops/"+path, target_size=(150, 200))
     x = image.img_to_array(img)
-    #x = np.expand_dims(x, axis=0)
-    #x = preprocess_input(x)
+    # hacer scaling /255
     return x
 
 def process_line(line, listForOneHot):
@@ -54,7 +53,7 @@ def generate_arrays_from_file(path):
                 x, y = process_line(line, listForOneHot)
                 inputs.append(x)
                 targets.append(y)
-                if i%14==0:
+                if i%16==0:
                     X = np.array(inputs)
                     Y = np.array(targets)
                     yield (X, Y)
@@ -82,12 +81,12 @@ def loadModel():
     my_model = Model(inputs=input, outputs=x)
 
     #In the summary, weights and layers from VGG part will be hidden, but they will be fit during the training
-    #my_model.summary()
-    my_model.compile(loss='categorical_crossentropy',
+    my_model.summary()
+    """my_model.compile(loss='categorical_crossentropy',
                 optimizer='sgd',
                 metrics=['accuracy'])
     my_model.fit_generator(generate_arrays_from_file(os.getcwd()+"/../../subsets/subset1.txt"), 
-                steps_per_epoch=1000, epochs=10)
+                steps_per_epoch=1000, epochs=10)"""  
 
 loadModel()
 #Then training with your data !

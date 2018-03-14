@@ -14,7 +14,7 @@ code/keras/*.h5
 
 *.docx
 
-# Big data file
+# Big data files
 
 *.txt
 

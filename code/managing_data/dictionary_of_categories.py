@@ -2,6 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import pandas as pd
 
 currentPath = os.getcwd()
 
@@ -89,5 +90,36 @@ def drawHistogram(listOfKeys, dictionary):
 keys = getListOfKeys(dict)
 print(keys)
 drawHistogram(keys, dict)"""
+def createFileWith5000ElementsPerClass():
+    dictionaryOfFullData = getDictionaryWithCategories(list_category_img_path="/Volumes/HDD/TFG/full_data.txt")
+    frame = pd.read_csv("/Volumes/HDD/TFG/full_data.txt",  delim_whitespace=True,skiprows=0,header=1)
+    frame_dictionary = {}
+    train_dictionary = {}
+    test_dictionary = {}
+    validation_dictionary = {}
+    for key in dictionaryOfFullData.keys():
+        tempFrame = frame.loc[frame["category_label"]==int(key)]
+        if int(key) != 30:
+            frame_dictionary[key] = tempFrame.sample(n = 5000)
+        else:
+            frame_dictionary[key] = tempFrame
+        test_dictionary[key] = frame_dictionary[key][:500]
+        validation_dictionary[key] = frame_dictionary[key][500:1500]
+        train_dictionary[key] = frame_dictionary[key][1500:]
+    return frame_dictionary, test_dictionary, validation_dictionary, train_dictionary
 
-#print(getDictionaryWithCategories(list_category_img_path="/Volumes/HDD/TFG/big_data_list_category_img.txt"))
+def concatFrames(frame, fileName):
+    listOfFrames = []
+    for key in frame.keys():
+        listOfFrames.append(frame[key])
+    result = pd.concat(listOfFrames)
+    print(len(result))
+    result.to_csv(currentPath+"/../../"+fileName, sep=" ", index=False)
+total, test, val, train = frame = createFileWith5000ElementsPerClass()
+#print(len(frame["30"]))
+concatFrames(total, "total_data.txt")
+concatFrames(test, "test_data.txt")
+concatFrames(val, "validation_data.txt")
+concatFrames(train, "train_data.txt")
+#file = pd.read_csv(currentPath+"/../../setForTraining.txt", delim_whitespace=True,skiprows=0)
+#print(file.describe())
