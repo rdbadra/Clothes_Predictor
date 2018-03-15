@@ -58,7 +58,7 @@ def generateProportionalSubset(list, dictionary):
 """
 Creates a list containing all elements of a file
 """
-def getDatasetFileInMemory(list_category_img_path = os.getcwd()+"/../../list_category_img.txt"):
+def getDatasetFileInMemory(list_category_img_path = os.getcwd()+"/../../height_width.txt"):
 
     list = []
     with open(list_category_img_path, "r") as fp:
@@ -114,10 +114,10 @@ def createBigDataFile():
 
 #createBigDataFile()
 def createSubsets():
-    dic=dc.getDictionaryWithCategories(os.getcwd()+"/../../full_data.txt")
+    dic=dc.getDictionaryWithCategories(os.getcwd()+"/../../height_width.txt")
     print(dic)
     print("Total Values in Dictionary Big Data : "+str(dc.getTotalNumberOfValuesInDictionary(dic)))
-    dataset = getDatasetFileInMemory(list_category_img_path = os.getcwd()+"/../../full_data.txt")
+    dataset = getDatasetFileInMemory(list_category_img_path = os.getcwd()+"/../../height:width.txt")
     dictionary = dc.getDictionaryWithCategoriesFromList(dataset)
     subset1 = generateProportionalSubset(dataset, dictionary)
     subset2 = generateProportionalSubset(dataset, dictionary)
