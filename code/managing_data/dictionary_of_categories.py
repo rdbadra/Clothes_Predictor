@@ -93,7 +93,7 @@ print(keys)
 drawHistogram(keys, dict)"""
 def createFileWith5000ElementsPerClass():
     dictionaryOfFullData = getDictionaryWithCategories(list_category_img_path=currentPath+"/../../full_data.txt")
-    frame = pd.read_csv("/Volumes/HDD/TFG/full_data.txt",  delim_whitespace=True,skiprows=0,header=1)
+    frame = pd.read_csv(os.getcwd()+"/../../full_data.txt",  delim_whitespace=True,skiprows=0)
     frame_dictionary = {}
     train_dictionary = {}
     test_dictionary = {}
@@ -121,9 +121,9 @@ def concatFrames(frame, fileName):
 def createDataForTrainingAndTesting():
     total, test, val, train = frame = createFileWith5000ElementsPerClass()
     #print(len(frame["30"]))
-    concatFrames(total, currentPath+"/../../total_data.txt")
-    concatFrames(test, currentPath+"/../../test_data.txt")
-    concatFrames(val, currentPath+"/../../validation_data.txt")
-    concatFrames(train, currentPath+"/../../train_data.txt")
+    concatFrames(total, "total_data.txt")
+    concatFrames(test, "test_data.txt")
+    concatFrames(val, "validation_data.txt")
+    concatFrames(train, "train_data.txt")
 #file = pd.read_csv(currentPath+"/../../setForTraining.txt", delim_whitespace=True,skiprows=0)
 #print(file.describe())

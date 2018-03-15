@@ -8,13 +8,13 @@ def cropImages():
     count = 0
     f = [os.path.join(r,file) for r,d,f in os.walk(mypath) for file in f if file.endswith(".txt")]
     for textFile in f:
-        imageFile = os.getcwd()+"/../../DeepFashion/Category and Attribute Prediction Benchmark/Img/" + textFile.replace(mypath, "")
+        imageFile = os.getcwd()+"/../../DeepFashion/Img/" + textFile.replace(mypath, "")
         imageFile = imageFile.replace('.txt', '.jpg')
         with open(textFile) as coordinatesFile:
             coordinatesText = coordinatesFile.readline()
             splitCoordinates = coordinatesText.split(';')
             image = cv2.imread(imageFile)
-            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            #gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             x1 = int(splitCoordinates[0])
             y1 = int(splitCoordinates[1])
             x2 = int(splitCoordinates[2])

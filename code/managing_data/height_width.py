@@ -103,6 +103,6 @@ def eliminateCategoriesWithSmallBBox():
     w = heightDF[heightDF["width"] > 50]
     #print(w.describe())
     w.to_csv(full_data, sep=" ", index=False)
-df = pd.read_csv(full_data, delim_whitespace=True,skiprows=0)
-print(df.describe())
+#df = pd.read_csv(full_data, delim_whitespace=True,skiprows=0)
+#print(df.describe())
 #drawHeightsHistogram()
