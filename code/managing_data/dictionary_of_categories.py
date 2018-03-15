@@ -10,7 +10,7 @@ currentPath = os.getcwd()
 Create a dictionary with the categories as keys, and value the number of examples
 """
 
-def getDictionaryWithCategories(list_category_img_path = currentPath+"/../../DeepFashion/Category and Attribute Prediction Benchmark/Anno/list_category_img.txt"):
+def getDictionaryWithCategories(list_category_img_path = currentPath+"/../../height_width.txt"):
     dict = {}
     with open(list_category_img_path, "r") as fp:
         line = fp.readline()
@@ -18,10 +18,10 @@ def getDictionaryWithCategories(list_category_img_path = currentPath+"/../../Dee
         line = fp.readline()
         count = 1
         while line:
-            if (list_category_img_path == currentPath+"/../../DeepFashion/Category and Attribute Prediction Benchmark/Anno/list_category_img.txt"):
+            if (list_category_img_path == currentPath+"/../../DeepFashionAnno/list_category_img.txt"):
                 split = line.split()
             else:
-                split = line.split(' ')
+                split = line.split()
             #print(split)
             if split[1] in dict.keys():
                 dict[split[1]] += 1
@@ -48,6 +48,7 @@ Gets array of keys of a dictionary
 """
 def getListOfKeys(dict):
     listOfKeys = []
+    #print(dict.keys())
     for key in dict.keys():
         listOfKeys.append(int(key))
     listOfKeys.sort()

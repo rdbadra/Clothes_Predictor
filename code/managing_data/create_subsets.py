@@ -90,15 +90,16 @@ def generateSubsetFromKeys(dataset, dictionary, keys):
     writefile = open(path, "w")
     total = dc.getTotalNumberOfValuesInDictionary(dictionary)
     writefile.write(str(total)+"\n")
-    writefile.write("image_name"+"  "+"category_label"+"  "+"type_of_cloth"+"  "+"body_part"+"\n")
+    writefile.write("image_name  category_label  type_of_cloth  body_part  height  width  height/width_relation\n")
     for line in dataset:
         split = line.split()
         #print(split)
         if int(split[1]) in keys:
             if int(split[1]) is 17:
-                writefile.write(split[0]+"  "+str(19)+"  "+split[2]+"  "+split[3]+"\n")
+                writefile.write(split[0]+"  "+str(19)+"  "+split[2]+"  "+split[3]+"  "+split[4]+
+                "  "+split[5]+"  "+split[6]+"\n")
             else:
-                writefile.write(split[0]+"  "+split[1]+"  "+split[2]+"  "+split[3]+"\n")
+                writefile.write(line)
 
 
 """
@@ -108,8 +109,10 @@ def createBigDataFile():
     fullDataset = getDatasetFileInMemory()
     fullDict = dc.getDictionaryWithCategories()
     fullDictKeys = dc.getListOfKeys(fullDict)
+    print(fullDictKeys)
     maxDict = dc.getCategoriesWithBigData(fullDict, fullDictKeys)
     maxDictKeys = dc.getListOfKeys(maxDict)
+    print(maxDictKeys)
     generateSubsetFromKeys(fullDataset, maxDict, maxDictKeys)
 
 #createBigDataFile()
@@ -117,7 +120,7 @@ def createSubsets():
     dic=dc.getDictionaryWithCategories(os.getcwd()+"/../../height_width.txt")
     print(dic)
     print("Total Values in Dictionary Big Data : "+str(dc.getTotalNumberOfValuesInDictionary(dic)))
-    dataset = getDatasetFileInMemory(list_category_img_path = os.getcwd()+"/../../height:width.txt")
+    dataset = getDatasetFileInMemory(list_category_img_path = os.getcwd()+"/../../height_width.txt")
     dictionary = dc.getDictionaryWithCategoriesFromList(dataset)
     subset1 = generateProportionalSubset(dataset, dictionary)
     subset2 = generateProportionalSubset(dataset, dictionary)

@@ -4,7 +4,7 @@ import time
 import matplotlib.pyplot as plt
 import os
 
-big_data = os.getcwd()+"/../../list_category_img.txt"
+big_data = os.getcwd()+"/../../big_data_list_category_img.txt"
 full_data = os.getcwd()+"/../../full_data.txt"
 bbox_data = os.getcwd()+"/../../DeepFashion/Anno/list_bbox.txt"
 file_with_sizes = os.getcwd()+"/../../height_width.txt"
@@ -98,11 +98,11 @@ def drawHeightsHistogram():
 #category_label = df.loc[df['image_name'] == "img/Sheer_Pleated-Front_Blouse/img_00000001.jpg"].iloc[0][1]
 #print(type(int(category_label)))
 def eliminateCategoriesWithSmallBBox():
-    df = pd.read_csv(file_with_sizes, delim_whitespace=True,skiprows=0,header=1)
+    df = pd.read_csv(big_data, delim_whitespace=True,skiprows=0,header=1)
     heightDF = df[df['height'] > 50]
     w = heightDF[heightDF["width"] > 50]
     #print(w.describe())
     w.to_csv(full_data, sep=" ", index=False)
-#df = pd.read_csv(full_data, delim_whitespace=True,skiprows=0)
-#print(df.describe())
+df = pd.read_csv(full_data, delim_whitespace=True,skiprows=0)
+print(df.describe())
 #drawHeightsHistogram()

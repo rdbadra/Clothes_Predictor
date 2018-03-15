@@ -5,9 +5,9 @@ import insert_categories_name as insert
 import height_width as size
 
 
-#insert.insertCategoriesInFile()
+insert.insertCategoriesInFile()
 size.createSizeFile()
-size.eliminateCategoriesWithSmallBBox()
 subsets.createBigDataFile()
+size.eliminateCategoriesWithSmallBBox()
 #bbox.createCoordinatesFileFromSubset()
 #crop.cropImages()
