@@ -6,10 +6,10 @@ import height_width as size
 import dictionary_of_categories as dc
 
 
-"""insert.insertCategoriesInFile()
+insert.insertCategoriesInFile()
 size.createSizeFile()
 subsets.createBigDataFile()
 size.eliminateCategoriesWithSmallBBox()
-dc.createDataForTrainingAndTesting()"""
-#bbox.createCoordinatesFileFromFile()
+dc.createDataForTrainingAndTesting()
+bbox.createCoordinatesFileFromFile()
 crop.cropImages()

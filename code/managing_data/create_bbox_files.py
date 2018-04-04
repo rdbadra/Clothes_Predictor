@@ -1,10 +1,12 @@
 import os
 import errno
 
-pathToRead = os.getcwd()+"/../../train_data.txt"
+trainPath = os.getcwd()+"/../../train_data.txt"
+validPath = os.getcwd()+"/../../validation_data.txt"
+testPath = os.getcwd()+"/../../test_data.txt"
 comparePathToRead = os.getcwd()+"/../../DeepFashion/Anno/list_bbox.txt"
 
-def getDictionaryForFile(path, header=True):
+def getDictionaryForFile(path, header=False):
     dict = {}
     with open(path, "r") as file:
         line = file.readline()
@@ -19,64 +21,32 @@ def getDictionaryForFile(path, header=True):
             line = file.readline()
     return dict
 
-def createCoordinatesFileFromSubset():
-    count = 1
-    with open(pathToRead, "r") as subsetFile:
-        line = subsetFile.readline()
-        line = subsetFile.readline()
-        line = subsetFile.readline()
-        while line:
-            split = line.split()
-            with open(comparePathToRead, "r") as bboxFile:
-                bboxLine = bboxFile.readline()
-                bboxLine = bboxFile.readline()
-                bboxLine = bboxFile.readline()
-                while bboxLine:
-                    bboxSplit = bboxLine.split()
-                    if split[0] == bboxSplit[0]:
-                        #fileName = split[0].replace("/", "-")
-                        fileName = split[0].replace(".jpg", ".txt")
-                        if not os.path.exists(os.path.dirname(os.getcwd()+"/../../face-coordinates/"+fileName)):
-                            try:
-                                os.makedirs(os.path.dirname(os.getcwd()+"/../../face-coordinates/"+fileName))
-                            except OSError as exc: # Guard against race condition
-                                if exc.errno != errno.EEXIST:
-                                    raise
-                        with open(os.getcwd()+"/../../face-coordinates/"+fileName, "w+") as file:
-                            file.write(bboxSplit[1]+";"+bboxSplit[2]+";"+bboxSplit[3]+";"+bboxSplit[4]+";\n")
-                            break
-                    else:
-                        bboxLine = bboxFile.readline()
-            line = subsetFile.readline()
-            count += 1
-            if count % 100 == 0:
-                print("file : "+str(count)+"\n")
-    print(count)
-    print("finished")
-
 def createCoordinatesFileFromFile():
+    createCoordinatesFiles(trainPath, "train")
+    createCoordinatesFiles(testPath, "test")
+    createCoordinatesFiles(validPath, "valid")
+
+def createCoordinatesFiles(path, type):
     count = 1
-    bbox = getDictionaryForFile(comparePathToRead, header=True)
-    with open(pathToRead, "r") as subsetFile:
+    bbox = getDictionaryForFile(comparePathToRead, header=False)
+    with open(path, "r") as subsetFile:
         line = subsetFile.readline()
         line = subsetFile.readline()
         while line:
             split = line.split()
             array = bbox[split[0]]
             fileName = split[0].replace(".jpg", ".txt")
-            if not os.path.exists(os.path.dirname(os.getcwd()+"/../../face-coordinates/"+fileName)):
+            fileName = fileName.replace("/", "+")
+            if not os.path.exists(os.path.dirname(os.getcwd()+"/../../face-coordinates/"+type+"/"+split[2]+"/"+fileName)):
                 try:
-                    os.makedirs(os.path.dirname(os.getcwd()+"/../../face-coordinates/"+fileName))
+                    os.makedirs(os.path.dirname(os.getcwd()+"/../../face-coordinates/"+type+"/"+split[2]+"/"+fileName))
                 except OSError as exc: # Guard against race condition
                     if exc.errno != errno.EEXIST:
                         raise
-            with open(os.getcwd()+"/../../face-coordinates/"+fileName, "w+") as file:
+            with open(os.getcwd()+"/../../face-coordinates/"+type+"/"+split[2]+"/"+fileName, "w+") as file:
                 file.write(array[0]+";"+array[1]+";"+array[2]+";"+array[3]+";\n")
                 
             count += 1
-            if count % 100 == 0:
-                print("file : "+str(count)+"\n")
             line = subsetFile.readline()
-    print(count)
+    print(type+" : "+str(count))
     print("finished")
-        

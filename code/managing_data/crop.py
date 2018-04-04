@@ -7,9 +7,16 @@ def cropImages():
     cropPath = os.getcwd()+"/../../crops/"
     count = 0
     f = [os.path.join(r,file) for r,d,f in os.walk(mypath) for file in f if file.endswith(".txt")]
+    print("Total of "+str(len(f))+" files")
     for textFile in f:
-        imageFile = os.getcwd()+"/../../DeepFashion/Img/" + textFile.replace(mypath, "")
+        imageFile = textFile.replace(mypath, "")
+        datapath = imageFile[:(imageFile.index("/")+1)]
+        imageFile = imageFile[(imageFile.index("/")+1):]
+        datapath += imageFile[:(imageFile.index("/")+1)]
+        imageFile = imageFile[(imageFile.index("/")+1):]
+        imageFile = os.getcwd()+"/../../DeepFashion/Img/" + imageFile
         imageFile = imageFile.replace('.txt', '.jpg')
+        imageFile = imageFile.replace('+', '/')
         with open(textFile) as coordinatesFile:
             coordinatesText = coordinatesFile.readline()
             splitCoordinates = coordinatesText.split(';')

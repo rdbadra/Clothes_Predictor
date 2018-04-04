@@ -33,7 +33,10 @@ def insertCategoriesInFile():
                     while clothLine:
                         clothSplit = clothLine.split()
                         if int(split[1])+2 == clothCount:
-                            line = split[0] + "\t\t" + split[1] + "\t"+clothSplit[0]+"\t\t"+clothSplit[1]+"\n"
+                            if int(split[1])==17:
+                                line = split[0] + "\t\t" + str(19) + "\t"+"Top"+"\t\t"+clothSplit[1]+"\n"
+                            else:
+                                line = split[0] + "\t\t" + split[1] + "\t"+clothSplit[0]+"\t\t"+clothSplit[1]+"\n"
                             writefile.write(line)
                             #print clothSplit
                             #break
