@@ -8,3 +8,5 @@ def downloadDeepFashionZip():
     print('Downloading DeepFashion')
     urllib.request.urlretrieve(url, file_name)  
     print("Download Finished")
+
+downloadDeepFashionZip()

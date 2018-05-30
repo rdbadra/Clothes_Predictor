@@ -98,15 +98,19 @@ def createFileWith5000ElementsPerClass():
     train_dictionary = {}
     test_dictionary = {}
     validation_dictionary = {}
+    print(dictionaryOfFullData)
     for key in dictionaryOfFullData.keys():
         tempFrame = frame.loc[frame["category_label"]==int(key)]
         if int(key) != 30:
-            frame_dictionary[key] = tempFrame.sample(n = 5000)
+            if len(tempFrame) > 5000:
+                 frame_dictionary[key] = tempFrame.sample(n = 5000)
+            else: 
+                frame_dictionary[key] = tempFrame.sample(n = 5000)
         else:
             frame_dictionary[key] = tempFrame
-        test_dictionary[key] = frame_dictionary[key][:500]
-        validation_dictionary[key] = frame_dictionary[key][500:1500]
-        train_dictionary[key] = frame_dictionary[key][1500:]
+        test_dictionary[key] = frame_dictionary[key][:int(len(frame_dictionary[key])*0.3)]
+        validation_dictionary[key] = frame_dictionary[key][int(len(frame_dictionary[key])*0.3):int(len(frame_dictionary[key])*0.3)+int((len(frame_dictionary[key])*0.7)*0.3)]
+        train_dictionary[key] = frame_dictionary[key][int(len(frame_dictionary[key])*0.3)+int((len(frame_dictionary[key])*0.7)*0.3):]
     return frame_dictionary, test_dictionary, validation_dictionary, train_dictionary
 
 def concatFrames(frame, fileName):
@@ -119,7 +123,7 @@ def concatFrames(frame, fileName):
 
 
 def createDataForTrainingAndTesting():
-    total, test, val, train = frame = createFileWith5000ElementsPerClass()
+    total, test, val, train = createFileWith5000ElementsPerClass()
     #print(len(frame["30"]))
     concatFrames(total, "total_data.txt")
     concatFrames(test, "test_data.txt")

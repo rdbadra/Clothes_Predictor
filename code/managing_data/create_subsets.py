@@ -109,10 +109,8 @@ def createBigDataFile():
     fullDataset = getDatasetFileInMemory()
     fullDict = dc.getDictionaryWithCategories()
     fullDictKeys = dc.getListOfKeys(fullDict)
-    print(fullDictKeys)
     maxDict = dc.getCategoriesWithBigData(fullDict, fullDictKeys)
     maxDictKeys = dc.getListOfKeys(maxDict)
-    print(maxDictKeys)
     generateSubsetFromKeys(fullDataset, maxDict, maxDictKeys)
 
 #createBigDataFile()

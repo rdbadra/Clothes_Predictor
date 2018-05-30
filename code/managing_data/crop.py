@@ -36,7 +36,7 @@ def cropImages():
                 except OSError as exc: # Guard against race condition
                     if exc.errno != errno.EEXIST:
                         raise
-            print(path)
+            #print(path)
             cv2.imwrite(path, resized_crop)
             #cv2.imshow("Output", resized_crop)
             #cv2.waitKey(0)

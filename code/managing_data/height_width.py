@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import time
 import matplotlib.pyplot as plt
 import os
 
@@ -58,6 +57,7 @@ def createSizeFile():
             line = split[0] + " " + split[1] + " " + split[2] + " " + split[3] + " " + str(height) +" " + str(width) + " " + str(relation) + "\n"
             fileToCreate.write(line)
             line = file.readline()
+    print("Finished creating file with sizes")
 
 def getStandardDeviationAndVariance():
     heights = []
